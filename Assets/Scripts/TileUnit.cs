@@ -17,10 +17,20 @@ public class TileUnit : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (gameManager.activBallUnit != null)
+        SetBall(true);
+    }
+
+    public void SetBall(bool swapnNext)
+    {
+        if (isEmpty && gameManager.activBallUnit != null)
         {
             gameManager.activBallUnit.MoveBall(gameObject.transform.position);
-            gameManager.activBallUnit = null;
+            isEmpty = false;
+
+            if (swapnNext)
+            {
+                gameManager.SpawnNextBalls();
+            }           
         }
     }
 }

@@ -6,12 +6,10 @@ public class BallUnit : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private float posY;
+    private float posY = 1;
 
     private void Start()
     {
-        posY = 1;
-
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
     }
 
