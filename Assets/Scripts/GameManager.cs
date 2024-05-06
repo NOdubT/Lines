@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     private TileUnit RandomEmptyTile(List<GameObject> allTiles)
     {
         int tile = Random.Range(0, allTiles.Count);
-        if (allTiles[tile].GetComponent<TileUnit>().isEmpty)
+        if (allTiles[tile].GetComponent<TileUnit>().ballUnit == null)
         {
             return allTiles[tile].GetComponent<TileUnit>();
         }

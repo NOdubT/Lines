@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class BallUnit : MonoBehaviour
 {
+    public const int NONE = 0;
+    public const int RED = 1;
+    public const int YELLOW = 2;
+    public const int PURPLE = 3;
+
     private GameManager gameManager;
     private TileUnit c_tileUnit;
     private float offsetY = 1;
@@ -14,7 +19,7 @@ public class BallUnit : MonoBehaviour
 
     public void MoveBall(TileUnit tileUnit)
     {
-        c_tileUnit.isEmpty = true;
+        c_tileUnit.ballUnit = null;
         c_tileUnit = tileUnit;
         Vector3 pos = tileUnit.transform.position;
         pos.y += offsetY;
@@ -29,8 +34,8 @@ public class BallUnit : MonoBehaviour
         }
     }
 
-    public virtual BallDict UnitType()
+    public virtual int UnitType()
     {
-        return BallDict.NONE;
+        return NONE;
     }
 }

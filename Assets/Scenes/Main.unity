@@ -776,6 +776,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
+      propertyPath: RightTile
+      value: 
+      objectReference: {fileID: 570815016}
+    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
+        type: 3}
       propertyPath: neighborTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3838,6 +3843,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileNextBall (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
+        type: 3}
+      propertyPath: LeftTile
+      value: 
+      objectReference: {fileID: 570815016}
     - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
       propertyPath: neighborTiles.Array.size
@@ -7167,6 +7177,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileNextBall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
+        type: 3}
+      propertyPath: LeftTile
+      value: 
+      objectReference: {fileID: 1554353405}
+    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
+        type: 3}
+      propertyPath: RightTile
+      value: 
+      objectReference: {fileID: 466325671}
     - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
       propertyPath: neighborTiles.Array.size

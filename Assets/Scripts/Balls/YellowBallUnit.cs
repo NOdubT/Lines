@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class YellowBallUnit : BallUnit
 {
-    public override BallDict UnitType()
+    public override int UnitType()
     {
-        return BallDict.YELLOW;
+        return YELLOW;
     }
 }
