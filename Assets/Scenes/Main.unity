@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 363418865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea38108f88b9ee141b44324e4ee988cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 1522716a26f626b47bcdf3360c529695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ballObjects:
@@ -1367,6 +1367,8 @@ MonoBehaviour:
   maxSpawnBall: 0
   range: 0
   tileScale: 0
+  timeDelay: 0
+  activBall: {fileID: 0}
 --- !u!1001 &371201175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3101,7 +3103,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70710665, y: -0, z: -0, w: 0.70710695}
-  m_LocalPosition: {x: 0, y: 28.384418, z: 0.000003383686}
+  m_LocalPosition: {x: 0, y: 17.035563, z: 0.0000020766229}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
