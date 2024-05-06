@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSettings : MonoBehaviour
 {
     public string playerName { get; set; }
-    public string playerScore { get; set; }
+    public int playerScore { get; set; }
 
     public static PlayerSettings instance {  get; private set; }
 
@@ -25,7 +25,7 @@ public class PlayerSettings : MonoBehaviour
     class SaveData
     {
         public string name;
-        public string score;
+        public int score;
     }
 
     public void SaveScore()

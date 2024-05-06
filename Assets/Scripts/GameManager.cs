@@ -31,9 +31,9 @@ public class GameManager : MonoBehaviour
         SpawnNextBalls();
     }
 
-    public void AddScore(int score)
+    public void AddScore(int scoreToAdd)
     {
-        playerSettings.playerScore += score;
+        playerSettings.playerScore += scoreToAdd;
         playerScoreText.text = $"Score: {playerSettings.playerScore}";
     }
 
