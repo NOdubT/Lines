@@ -1,15 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> ballObjects;
+    public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI playerScoreText;
 
     private int maxSpawnUnit;  
     private GameObject[] gameField;
+    private PlayerSettings playerSettings;
 
     public BallUnit activBallUnit { set; get; }
     public List<GameObject> nextBallObjects {  set; get; }
@@ -21,9 +23,17 @@ public class GameManager : MonoBehaviour
         nextBallObjects = new List<GameObject>();
 
         gameField = GameObject.FindGameObjectsWithTag("Tile");
+        playerSettings = GameObject.Find("Player").GetComponent<PlayerSettings>();
+        playerNameText.text = playerSettings.playerName;
 
         NextBallObjects();
         SpawnNextBalls();
+    }
+
+    public void AddScore(int score)
+    {
+        playerSettings.playerScore += score;
+        playerScoreText.text = $"Score: {playerSettings.playerScore}";
     }
 
     private void NextBallObjects()
