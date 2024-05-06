@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class TileUnit : MonoBehaviour
 {
+    public GameObject LeftTopTile;
+    public GameObject TopTile;
+    public GameObject RightTopTile;
+
+    public GameObject LeftTile;
+    public GameObject RightTile;
+
+    public GameObject LeftBottomTile;
+    public GameObject BottomTile;
+    public GameObject RightBottomTile;
+
     private GameManager gameManager;
 
-    public bool isEmpty;
+    public bool isEmpty {  get; set; }
 
     private void Start()
     {
