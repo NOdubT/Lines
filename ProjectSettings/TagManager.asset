@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - Ball
+  - TileNextBall
   layers:
   - Default
   - TransparentFX

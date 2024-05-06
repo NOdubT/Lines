@@ -6,12 +6,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> ballObjects;
-    public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI playerScoreText;
+    public GameObject nextBallTile;
 
     private int maxSpawnUnit;  
     private GameObject[] gameField;
     private PlayerSettings playerSettings;
+    private Vector3 offset;
 
     public BallUnit activBallUnit { set; get; }
     public List<GameObject> nextBallObjects {  set; get; }
@@ -20,11 +21,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         maxSpawnUnit = 3;
+        offset = new Vector3(0, 1, -0.5f);
         nextBallObjects = new List<GameObject>();
 
         gameField = GameObject.FindGameObjectsWithTag("Tile");
         playerSettings = GameObject.Find("Player").GetComponent<PlayerSettings>();
-        playerNameText.text = playerSettings.playerName;
 
         NextBallObjects();
         SpawnNextBalls();
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < maxSpawnUnit; i++)
         {
             int unit = Random.Range(0, ballObjects.Count);
-            Vector3 pos = new Vector3(-2 + 2 * i, 0, 10.5f);
+            Vector3 pos = nextBallTile.transform.position + offset + Vector3.right * i * nextBallTile.transform.localScale.x;
             nextBallObjects.Add(Instantiate(ballObjects[unit], pos, gameObject.transform.rotation));
         }
     }

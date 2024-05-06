@@ -24,7 +24,8 @@ public class TileUnit : MonoBehaviour
     {
         if (isEmpty && gameManager.activBallUnit != null)
         {
-            gameManager.activBallUnit.MoveBall(gameObject.transform.position);
+            gameManager.activBallUnit.MoveBall(this);
+            gameManager.activBallUnit = null;
             isEmpty = false;
 
             if (swapnNext)
