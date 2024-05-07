@@ -5,9 +5,11 @@ public class TileUnit : MonoBehaviour
     private GameManager gameManager;
 
     public PlayUnit playUnit { get; set; }
+    public int pathWeight { get; set; }
 
     void Start()
     {
+        pathWeight = 0;
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
     }
 
