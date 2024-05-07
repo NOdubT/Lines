@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - PlayUnit
+  - TileNextUnit
   layers:
   - Default
   - TransparentFX

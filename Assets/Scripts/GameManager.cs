@@ -5,16 +5,32 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> playUits;
+    public List<GameObject> playUnits;
+    public List<GameObject> nextPlayUnitTiles;
 
-    private int maxPlayUnitSpawn = 3;
     private GameObject[] _tileList;
+    private float timeDelay;
+
+    private List<GameObject> nextSpawnUnitsList;
+
     public PlayUnit activePlayUnit { set; get; }
     public bool gameOver { set; get; }
 
     private void Start()
     {
+        timeDelay = 0.05f;
         _tileList = GameObject.FindGameObjectsWithTag("Tile");
+        InitNextSpawnUnits();
+    }
+
+    public void InitNextSpawnUnits()
+    {
+        nextSpawnUnitsList = new List<GameObject>();
+        foreach (GameObject tile in nextPlayUnitTiles)
+        {
+            nextSpawnUnitsList.Add(Instantiate(playUnits[Random.Range(0, playUnits.Count)],
+                tile.transform.position + Vector3.up, gameObject.transform.rotation));
+        }
     }
 
     public void SpawnPlayUnits()
@@ -24,20 +40,21 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Spawn()
     {
-        yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < maxPlayUnitSpawn; i++)
+        yield return new WaitForSeconds(timeDelay);
+        foreach (var spawnUnit in nextSpawnUnitsList)
         {
-            GameObject go = Instantiate(playUits[Random.Range(0, playUits.Count)]);
             TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
             if (tileUnit != null)
             {
-                go.transform.position = tileUnit.transform.position + Vector3.up;
+                spawnUnit.transform.position = tileUnit.transform.position + Vector3.up;
             }
             else
             {
                 gameOver = true;
             }
+            yield return new WaitForSeconds(timeDelay);
         }
+        InitNextSpawnUnits();
     }
 
     private TileUnit RandomEmptyTile(List<GameObject> tileList)

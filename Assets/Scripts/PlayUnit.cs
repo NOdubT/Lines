@@ -4,8 +4,6 @@ public class PlayUnit : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private Vector3 startPoint = new Vector3(0, 1, 12);
-
     private void Start()
     {
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
