@@ -7,6 +7,8 @@ public class PlayerSettings : MonoBehaviour
     public string playerName { get; set; }
     public int playerScore { get; set; }
 
+    public static string player = "Player";
+
     public static PlayerSettings instance {  get; private set; }
 
     private void Awake()

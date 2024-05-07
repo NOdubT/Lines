@@ -25,35 +25,41 @@ public class TileUnit : MonoBehaviour
     public GameObject RightBottomTile;
 
     private GameManager gameManager;
+
     private int ballsInLine = 5;
 
-    public BallUnit ballUnit {  get; set; }
+    public static string tileUnitTag = "Tile";
+
+    public PlayUnit playUnit { get; set; }
+    public int pathWeight { get; set; }
 
     private void Start()
     {
+        pathWeight = 0;
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
     }
 
     private void OnMouseDown()
     {
-        SetBall(true);
+        if (gameManager.activePlayUnit != null)
+        {
+            gameManager.activePlayUnit.MovePlayUnit(transform.position + Vector3.up);
+        }
     }
 
-    public void SetBall(bool swapnNext)
+    private void OnTriggerEnter(Collider other)
     {
-        if (ballUnit == null && gameManager.activBallUnit != null)
+        if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            ballUnit = gameManager.activBallUnit;
-            ballUnit.MoveBall(this);
-            gameManager.activBallUnit = null;
+            playUnit = other.GetComponent<PlayUnit>();
+        }
+    }
 
-            if (!CheckBalls())
-            {
-                if (swapnNext)
-                {
-                    gameManager.SpawnNextBalls();
-                }
-            }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(PlayUnit.playUnitTag))
+        {
+            playUnit = null;
         }
     }
 
@@ -91,7 +97,7 @@ public class TileUnit : MonoBehaviour
 
         if (addScore > 0)
         {
-            Destroy(ballUnit.gameObject);
+            Destroy(playUnit.gameObject);
             gameManager.AddScore(addScore);
             return true;
         }
@@ -102,40 +108,40 @@ public class TileUnit : MonoBehaviour
     {
         if (NeighborTile(direction) != null) // remove with out this
         {
-            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, ballUnit.UnitType());
+            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, playUnit.UnitType());
         }
 
         direction = OposideDirection(direction);
         if (NeighborTile(direction) != null) // remove with out this
         {
-            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, ballUnit.UnitType());
+            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, playUnit.UnitType());
         }
     }
 
     private void RemoveBalls(int direction, int balltype)
     {
-        if (ballUnit != null && ballUnit.UnitType() == balltype)
+        if (playUnit != null && playUnit.UnitType() == balltype)
         {
             if(NeighborTile(direction) != null)
             {
                 NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, balltype);
             }
-            Destroy(ballUnit.gameObject);
+            Destroy(playUnit.gameObject);
         }
     }
 
     private int CountBallsInLine(int direction)
     {
-        int countR = CountBalls(direction, ballUnit.UnitType());
+        int countR = CountBalls(direction, playUnit.UnitType());
 
         direction = OposideDirection(direction);
-        countR += CountBalls(direction, ballUnit.UnitType());
+        countR += CountBalls(direction, playUnit.UnitType());
         return countR;
     }
 
     private int CountBalls(int direction, int balltype)
     {
-        if(ballUnit != null && balltype == ballUnit.UnitType())
+        if(playUnit != null && balltype == playUnit.UnitType())
         {
             if(NeighborTile(direction) != null)
             {

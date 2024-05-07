@@ -1,4 +1,4 @@
-public class YellowBallUnit : BallUnit
+public class YellowBallUnit : PlayUnit
 {
     public override int UnitType()
     {

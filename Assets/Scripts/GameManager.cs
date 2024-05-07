@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -5,30 +6,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> ballObjects;
+    public List<GameObject> playUnits;
+    public List<GameObject> nextPlayUnitTiles;
+
     public TextMeshProUGUI playerScoreText;
-    public GameObject nextBallTile;
-
-    private int maxSpawnUnit;  
-    private GameObject[] gameField;
     private PlayerSettings playerSettings;
-    private Vector3 offset;
 
-    public BallUnit activBallUnit { set; get; }
-    public List<GameObject> nextBallObjects {  set; get; }
+    private GameObject[] _tileList;
+    private List<GameObject> nextSpawnUnitsList;
 
-    // Start is called before the first frame update
+    private const float timeDelay = 0.05f;
+
+    public PlayUnit activePlayUnit { set; get; }
+    public bool gameOver { set; get; }
+
     void Start()
     {
-        maxSpawnUnit = 3;
-        offset = new Vector3(0, 1, -0.5f);
-        nextBallObjects = new List<GameObject>();
+        _tileList = GameObject.FindGameObjectsWithTag(TileUnit.tileUnitTag);
+        playerSettings = GameObject.Find(PlayerSettings.player).GetComponent<PlayerSettings>();
 
-        gameField = GameObject.FindGameObjectsWithTag("Tile");
-        playerSettings = GameObject.Find("Player").GetComponent<PlayerSettings>();
-
-        NextBallObjects();
-        SpawnNextBalls();
+        InitNextSpawnUnits();
+        SpawnPlayUnits();
     }
 
     public void AddScore(int scoreToAdd)
@@ -37,38 +35,53 @@ public class GameManager : MonoBehaviour
         playerScoreText.text = $"Score: {playerSettings.playerScore}";
     }
 
-    private void NextBallObjects()
+    public void InitNextSpawnUnits()
     {
-        nextBallObjects.Clear();
-        for (int i = 0; i < maxSpawnUnit; i++)
+        nextSpawnUnitsList = new List<GameObject>();
+        foreach (GameObject tile in nextPlayUnitTiles)
         {
-            int unit = Random.Range(0, ballObjects.Count);
-            Vector3 pos = nextBallTile.transform.position + offset + Vector3.right * i * nextBallTile.transform.localScale.x;
-            nextBallObjects.Add(Instantiate(ballObjects[unit], pos, gameObject.transform.rotation));
+            nextSpawnUnitsList.Add(Instantiate(playUnits[Random.Range(0, playUnits.Count)],
+                tile.transform.position + Vector3.up, gameObject.transform.rotation));
         }
     }
 
-    public void SpawnNextBalls()
-    {        
-        foreach (GameObject ball in nextBallObjects)
-        {
-            activBallUnit = ball.GetComponent<BallUnit>();
-            RandomEmptyTile(gameField.ToList<GameObject>()).SetBall(false);
-        }
-        NextBallObjects();
+    public void SpawnPlayUnits()
+    {
+        StartCoroutine(Spawn());
     }
 
-    private TileUnit RandomEmptyTile(List<GameObject> allTiles)
+    IEnumerator Spawn()
     {
-        int tile = Random.Range(0, allTiles.Count);
-        if (allTiles[tile].GetComponent<TileUnit>().ballUnit == null)
+        yield return new WaitForSeconds(timeDelay * 2);
+        foreach (var spawnUnit in nextSpawnUnitsList)
         {
-            return allTiles[tile].GetComponent<TileUnit>();
+            TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
+            if (tileUnit != null)
+            {
+                spawnUnit.transform.position = tileUnit.transform.position + Vector3.up;
+            }
+            else
+            {
+                gameOver = true;
+            }
+            yield return new WaitForSeconds(timeDelay);
         }
-        else
+        InitNextSpawnUnits();
+    }
+
+    private TileUnit RandomEmptyTile(List<GameObject> tileList)
+    {
+        if (tileList.Count > 0)
         {
-            allTiles.RemoveAt(tile);
-            return RandomEmptyTile(allTiles);
-        }       
+            int index = Random.Range(0, tileList.Count);
+            TileUnit tileUnit = tileList[index].GetComponent<TileUnit>();
+            if (tileUnit.playUnit != null)
+            {
+                tileList.RemoveAt(index);
+                return RandomEmptyTile(tileList);
+            }
+            return tileUnit;
+        }
+        return null;
     }
 }
