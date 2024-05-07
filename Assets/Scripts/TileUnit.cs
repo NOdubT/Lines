@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TileUnit : MonoBehaviour
@@ -43,6 +44,7 @@ public class TileUnit : MonoBehaviour
         if (gameManager.activePlayUnit != null)
         {
             gameManager.activePlayUnit.MovePlayUnit(transform.position + Vector3.up);
+            StartCoroutine(CheckBalls());
         }
     }
 
@@ -62,8 +64,9 @@ public class TileUnit : MonoBehaviour
         }
     }
 
-    private bool CheckBalls()
+    IEnumerator CheckBalls()
     {
+        yield return new WaitForSeconds(0.05f);
         int countLB = CountBallsInLine(LEFT_BOTTOM);
         int countB = CountBallsInLine(BOTTOM);
         int countRB = CountBallsInLine(RIGHT_BOTTOM);
@@ -98,9 +101,10 @@ public class TileUnit : MonoBehaviour
         {
             Destroy(playUnit.gameObject);
             gameManager.AddScore(addScore);
-            return true;
+        } else
+        {
+            gameManager.SpawnPlayUnits();
         }
-        return false;
     }
 
     private void RemoveBallsInLine(int direction)

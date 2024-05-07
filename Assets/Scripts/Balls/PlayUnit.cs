@@ -21,7 +21,6 @@ public class PlayUnit : MonoBehaviour
     public void MovePlayUnit(Vector3 toPoint)
     {
         gameObject.transform.position = toPoint;
-        gameManager.SpawnPlayUnits();
     }
 
     private void OnMouseDown()
