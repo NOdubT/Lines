@@ -11,7 +11,7 @@ public class PlayUnit : MonoBehaviour
 
     private GameManager gameManager;
 
-    public bool isNew {  get; set; }
+    public bool isNextSpawn {  get; set; }
 
     private void Start()
     {
@@ -26,7 +26,7 @@ public class PlayUnit : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isNew)
+        if (!isNextSpawn)
         {
             gameManager.activePlayUnit = this;
         }
