@@ -4,20 +4,11 @@ public class TileNextUnit : MonoBehaviour
 {
     public static string tileNextUnitTag = "TileNextUnit";
 
-    public PlayUnit playUnit { get; set; }
-    public int pathWeight { get; set; }
-
-    private void Start()
-    {
-        pathWeight = 0;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            playUnit = other.GetComponent<PlayUnit>();
-            playUnit.isNew = true;
+            other.GetComponent<PlayUnit>().isNew = true;
         }
     }
 
@@ -25,8 +16,7 @@ public class TileNextUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            playUnit.isNew = false;
-            playUnit = null;
+            other.GetComponent<PlayUnit>().isNew = false;
         }
     }
 }
