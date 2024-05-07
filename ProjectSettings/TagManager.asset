@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tile
-  - Ball
-  - TileNextBall
+  - PlayUnit
+  - TileNextUnit
   layers:
   - Default
   - TransparentFX

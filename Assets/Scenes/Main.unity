@@ -772,23 +772,13 @@ PrefabInstance:
     - target: {fileID: 3584113365568798977, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
       propertyPath: m_Name
-      value: TileNextBall
+      value: TileNextUnit
       objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
+    - target: {fileID: 3584113365568798977, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
-      propertyPath: RightTile
-      value: 
-      objectReference: {fileID: 570815016}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.size
-      value: 1
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.data[0]
-      value: 
-      objectReference: {fileID: 570815016}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3844,23 +3834,8 @@ PrefabInstance:
     - target: {fileID: 3584113365568798977, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
       propertyPath: m_Name
-      value: TileNextBall (2)
+      value: TileNextUnit (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: LeftTile
-      value: 
-      objectReference: {fileID: 570815016}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.data[0]
-      value: 
-      objectReference: {fileID: 570815016}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7178,33 +7153,8 @@ PrefabInstance:
     - target: {fileID: 3584113365568798977, guid: f4cf2bf59e714f94390dc9b14b78b968,
         type: 3}
       propertyPath: m_Name
-      value: TileNextBall (1)
+      value: TileNextUnit (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: LeftTile
-      value: 
-      objectReference: {fileID: 1554353405}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: RightTile
-      value: 
-      objectReference: {fileID: 466325671}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.data[0]
-      value: 
-      objectReference: {fileID: 1554353405}
-    - target: {fileID: 6491202359225831797, guid: f4cf2bf59e714f94390dc9b14b78b968,
-        type: 3}
-      propertyPath: neighborTiles.Array.data[1]
-      value: 
-      objectReference: {fileID: 466325671}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

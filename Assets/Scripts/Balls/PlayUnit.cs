@@ -11,6 +11,8 @@ public class PlayUnit : MonoBehaviour
 
     private GameManager gameManager;
 
+    public bool isNew {  get; set; }
+
     private void Start()
     {
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
@@ -24,7 +26,10 @@ public class PlayUnit : MonoBehaviour
 
     private void OnMouseDown()
     {
-        gameManager.activePlayUnit = this;
+        if (!isNew)
+        {
+            gameManager.activePlayUnit = this;
+        }
     }
 
     public virtual int UnitType()

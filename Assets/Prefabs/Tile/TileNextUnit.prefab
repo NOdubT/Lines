@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 965036016826473152}
   - component: {fileID: 738182535149666512}
   - component: {fileID: 7263633249056685559}
-  - component: {fileID: 6491202359225831797}
   - component: {fileID: 7696498794255543947}
+  - component: {fileID: 2967551785237781483}
   m_Layer: 0
-  m_Name: TileNextBall
-  m_TagString: TileNextBall
+  m_Name: TileNextUnit
+  m_TagString: TileNextUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,19 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6491202359225831797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3584113365568798977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b1204680dc59fb4d857dfc817c40b9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEmpty: 0
 --- !u!54 &7696498794255543947
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,7 +130,19 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &2967551785237781483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584113365568798977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76eb2262158268c47b7bd41c48f100e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
