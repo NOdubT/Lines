@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject tile in nextPlayUnitTiles)
         {
             nextSpawnUnitsList.Add(Instantiate(playUnits[Random.Range(0, playUnits.Count)],
-                tile.transform.position + Vector3.up, gameObject.transform.rotation));
+                tile.transform.position, gameObject.transform.rotation));
         }
     }
 
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
             TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
             if (tileUnit != null)
             {
-                spawnUnit.transform.position = tileUnit.transform.position + Vector3.up;
+                spawnUnit.transform.position = tileUnit.transform.position;
             }
             else
             {

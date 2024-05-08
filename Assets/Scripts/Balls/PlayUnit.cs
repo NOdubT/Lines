@@ -18,7 +18,7 @@ public class PlayUnit : MonoBehaviour
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
     }
 
-    public void MovePlayUnit(Vector3 toPoint)
+    public virtual void MovePlayUnit(Vector3 toPoint)
     {
         gameObject.transform.position = toPoint;
     }
@@ -27,6 +27,11 @@ public class PlayUnit : MonoBehaviour
     {
         if (!isNextSpawn)
         {
+            if(gameManager.activePlayUnit != null)
+            {
+                gameManager.activePlayUnit.GetComponent<Animator>().enabled = false;
+            }
+            gameObject.GetComponent<Animator>().enabled = true;
             gameManager.activePlayUnit = this;
         }
     }

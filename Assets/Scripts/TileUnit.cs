@@ -43,7 +43,7 @@ public class TileUnit : MonoBehaviour
     {
         if (gameManager.activePlayUnit != null)
         {
-            gameManager.activePlayUnit.MovePlayUnit(transform.position + Vector3.up);
+            gameManager.activePlayUnit.MovePlayUnit(transform.position);
             StartCoroutine(CheckBalls());
         }
     }
