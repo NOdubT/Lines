@@ -24,7 +24,13 @@ public class GameManager : MonoBehaviour
         playerSettings = GameObject.Find(PlayerSettings.player).GetComponent<PlayerSettings>();
 
         InitNextSpawnUnits();
-        SpawnPlayUnits();
+        StartCoroutine(Spawn());
+    }
+
+    IEnumerator Spawn()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SpawnPlayUnits(Vector3.zero);
     }
 
     public void AddScore(int scoreToAdd)
@@ -49,11 +55,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnPlayUnits()
+    public void SpawnPlayUnits(Vector3 notInPoint)
     {
-        foreach(GameObject playUnit in nextSpawnUnitsList)
+        foreach(GameObject go in nextSpawnUnitsList)
         {
-            playUnit.transform.position = playUnit.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position;
+            PlayUnit playUnit = go.GetComponentInChildren<PlayUnit>();
+            Vector3 posSpawn = playUnit.playUnitPreview.transform.position;
+            if (posSpawn == notInPoint)
+            {
+                posSpawn = RandomEmptyTile(_tileList.ToList<GameObject>()).transform.position;
+            }
+            playUnit.MovePlayUnit(posSpawn);
         }
         InitNextSpawnUnits();
     }

@@ -103,7 +103,7 @@ public class TileUnit : MonoBehaviour
             gameManager.AddScore(CountScore(totalCount));
         } else
         {
-            gameManager.SpawnPlayUnits();
+            gameManager.SpawnPlayUnits(transform.position);
         }
     }
 
