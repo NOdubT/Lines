@@ -72,39 +72,48 @@ public class TileUnit : MonoBehaviour
         int countRB = CountBallsInLine(RIGHT_BOTTOM);
         int countR = CountBallsInLine(RIGHT);
 
-        int addScore = 0;
+        int totalCount = 0;
         if(countLB > ballsInLine)
         {
-            addScore += countLB - 1;
+            totalCount += countLB - 1;
             RemoveBallsInLine(LEFT_BOTTOM);
         }
 
         if (countB > ballsInLine)
         {
-            addScore += countB - 1;
+            totalCount += countB - 1;
             RemoveBallsInLine(BOTTOM);
         }
 
         if (countRB > ballsInLine)
         {
-            addScore += countRB - 1;
+            totalCount += countRB - 1;
             RemoveBallsInLine(RIGHT_BOTTOM);
         }
 
         if (countR > ballsInLine)
         {
-            addScore += countR - 1;
+            totalCount += countR - 1;
             RemoveBallsInLine(RIGHT);
         }
 
-        if (addScore > 0)
+        if (totalCount > 0)
         {
             Destroy(playUnit.gameObject);
-            gameManager.AddScore(addScore);
+            gameManager.AddScore(CountScore(totalCount));
         } else
         {
             gameManager.SpawnPlayUnits();
         }
+    }
+
+    private int CountScore(int totalCount)
+    {
+        if(totalCount > 5)
+        {
+            totalCount = 5 + (totalCount - 5) * 2;
+        }
+        return totalCount;
     }
 
     private void RemoveBallsInLine(int direction)

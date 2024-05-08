@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
                 gameOver = true;
                 break;
             }
-            AddScore(1);
             yield return new WaitForSeconds(timeDelay);
         }
         InitNextSpawnUnits();
