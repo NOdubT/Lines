@@ -7,11 +7,11 @@ public class PlayUnit : MonoBehaviour
     public const int YELLOW = 2;
     public const int PURPLE = 3;
 
+    public GameObject playUnitPreview;
+
     public static string playUnitTag = "PlayUnit";
 
     private GameManager gameManager;
-
-    public bool isNextSpawn {  get; set; }
 
     private void Start()
     {
@@ -25,7 +25,7 @@ public class PlayUnit : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isNextSpawn)
+        if (!playUnitPreview.activeSelf)
         {
             if(gameManager.activePlayUnit != null)
             {

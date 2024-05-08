@@ -8,7 +8,7 @@ public class TileNextUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            other.GetComponent<PlayUnit>().isNextSpawn = true;
+            other.GetComponent<PlayUnit>().playUnitPreview.SetActive(true);
         }
     }
 
@@ -16,7 +16,7 @@ public class TileNextUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            other.GetComponent<PlayUnit>().isNextSpawn = false;
+            other.GetComponent<PlayUnit>().playUnitPreview.SetActive(false);
         }
     }
 }

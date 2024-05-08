@@ -40,32 +40,22 @@ public class GameManager : MonoBehaviour
         nextSpawnUnitsList = new List<GameObject>();
         foreach (GameObject tile in nextPlayUnitTiles)
         {
-            nextSpawnUnitsList.Add(Instantiate(playUnits[Random.Range(0, playUnits.Count)],
-                tile.transform.position, gameObject.transform.rotation));
+            GameObject go = Instantiate(playUnits[Random.Range(0, playUnits.Count)],
+                tile.transform.position, gameObject.transform.rotation);
+            TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
+            if (tileUnit != null)
+            {
+                go.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position = tileUnit.transform.position;
+            }
+            nextSpawnUnitsList.Add(go);
         }
     }
 
     public void SpawnPlayUnits()
     {
-        StartCoroutine(Spawn());
-    }
-
-    IEnumerator Spawn()
-    {
-        yield return new WaitForSeconds(timeDelay * 2);
-        foreach (var spawnUnit in nextSpawnUnitsList)
+        foreach(GameObject playUnit in nextSpawnUnitsList)
         {
-            TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
-            if (tileUnit != null)
-            {
-                spawnUnit.transform.position = tileUnit.transform.position;
-            }
-            else
-            {
-                gameOver = true;
-                break;
-            }
-            yield return new WaitForSeconds(timeDelay);
+            playUnit.transform.position = playUnit.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position;
         }
         InitNextSpawnUnits();
     }
