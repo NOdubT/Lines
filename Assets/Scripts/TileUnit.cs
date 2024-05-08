@@ -135,20 +135,21 @@ public class TileUnit : MonoBehaviour
 
     private int CountBallsInLine(int direction)
     {
-        int countR = CountBalls(direction, playUnit.UnitType());
+        int count = CountBalls(direction, playUnit.UnitType());
 
         direction = OposideDirection(direction);
-        countR += CountBalls(direction, playUnit.UnitType());
-        return countR;
+        count += CountBalls(direction, playUnit.UnitType());
+        return count;
     }
 
     private int CountBalls(int direction, int balltype)
     {
-        if(playUnit != null && balltype == playUnit.UnitType())
+        if(playUnit != null && playUnit.UnitType() == balltype)
         {
-            if(NeighborTile(direction) != null)
+            GameObject n_Tile = NeighborTile(direction);
+            if (n_Tile != null)
             {
-                return NeighborTile(direction).GetComponent<TileUnit>().CountBalls(direction, balltype) + 1;
+                return n_Tile.GetComponent<TileUnit>().CountBalls(direction, balltype) + 1;
             }
             return 1;
         }
@@ -182,7 +183,7 @@ public class TileUnit : MonoBehaviour
             case LEFT_BOTTOM: return LeftBottomTile;
             case RIGHT_BOTTOM: return RightBottomTile;
             case TOP: return TopTile;
-            case BOTTOM: return TopTile;
+            case BOTTOM: return BottomTile;
             case RIGHT: return RightTile;
             case LEFT: return LeftTile;
 
