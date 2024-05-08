@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     private GameObject[] _tileList;
     private List<GameObject> nextSpawnUnitsList;
 
-    private const float timeDelay = 0.05f;
-
     public PlayUnit activePlayUnit { set; get; }
     public bool gameOver { set; get; }
 

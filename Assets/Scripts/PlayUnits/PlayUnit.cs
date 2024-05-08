@@ -11,7 +11,7 @@ public class PlayUnit : MonoBehaviour
 
     public static string playUnitTag = "PlayUnit";
 
-    private GameManager gameManager;
+    protected GameManager gameManager;
 
     private void Start()
     {
@@ -20,6 +20,8 @@ public class PlayUnit : MonoBehaviour
 
     public virtual void MovePlayUnit(Vector3 toPoint)
     {
+        gameObject.GetComponent<Animator>().enabled = false;
+        gameManager.activePlayUnit = null;
         gameObject.transform.position = toPoint;
     }
 
