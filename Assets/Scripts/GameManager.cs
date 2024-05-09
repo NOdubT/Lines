@@ -61,7 +61,16 @@ public class GameManager : MonoBehaviour
             Vector3 posSpawn = playUnit.playUnitPreview.transform.position;
             if (posSpawn == notInPoint)
             {
-                posSpawn = RandomEmptyTile().transform.position;
+                TileUnit randomPos = RandomEmptyTile();
+                if(randomPos != null)
+                {
+                    posSpawn = randomPos.transform.position;
+                } else
+                {
+                    gameOver = true;
+                    return;
+                }
+                
             }
             playUnit.MovePlayUnit(posSpawn);
         }
