@@ -56,7 +56,7 @@ public class TileUnit : MonoBehaviour
         {
             playUnit = other.GetComponent<PlayUnit>();
             gameObject.tag = tileTagFull;
-            CheckBalls();
+            CheckUnits();
         }
     }
 
@@ -64,9 +64,14 @@ public class TileUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            gameObject.tag = tileTagEmpty;
-            playUnit = null;
+            ClearTile();
         }
+    }
+
+    private void ClearTile()
+    {
+        gameObject.tag = tileTagEmpty;
+        playUnit = null;
     }
 
     IEnumerator CheckTag()
@@ -78,36 +83,36 @@ public class TileUnit : MonoBehaviour
         }
     }
 
-    private void CheckBalls()
+    private void CheckUnits()
     {
-        int countLB = CountBallsInLine(LEFT_BOTTOM);
-        int countB = CountBallsInLine(BOTTOM);
-        int countRB = CountBallsInLine(RIGHT_BOTTOM);
-        int countR = CountBallsInLine(RIGHT);
+        int countLB = CountUnitsInLine(LEFT_BOTTOM);
+        int countB = CountUnitsInLine(BOTTOM);
+        int countRB = CountUnitsInLine(RIGHT_BOTTOM);
+        int countR = CountUnitsInLine(RIGHT);
 
         int totalCount = 0;
         if(countLB > ballsInLine)
         {
             totalCount += countLB - 1;
-            RemoveBallsInLine(LEFT_BOTTOM);
+            RemoveUnitsInLine(LEFT_BOTTOM);
         }
 
         if (countB > ballsInLine)
         {
             totalCount += countB - 1;
-            RemoveBallsInLine(BOTTOM);
+            RemoveUnitsInLine(BOTTOM);
         }
 
         if (countRB > ballsInLine)
         {
             totalCount += countRB - 1;
-            RemoveBallsInLine(RIGHT_BOTTOM);
+            RemoveUnitsInLine(RIGHT_BOTTOM);
         }
 
         if (countR > ballsInLine)
         {
             totalCount += countR - 1;
-            RemoveBallsInLine(RIGHT);
+            RemoveUnitsInLine(RIGHT);
         }
 
         if (totalCount > 0)
@@ -126,49 +131,50 @@ public class TileUnit : MonoBehaviour
         return totalCount;
     }
 
-    private void RemoveBallsInLine(int direction)
+    private void RemoveUnitsInLine(int direction)
     {
         if (NeighborTile(direction) != null) // remove with out this
         {
-            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, playUnit.UnitType());
+            NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, playUnit.UnitType());
         }
 
         direction = OposideDirection(direction);
         if (NeighborTile(direction) != null) // remove with out this
         {
-            NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, playUnit.UnitType());
+            NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, playUnit.UnitType());
         }
     }
 
-    private void RemoveBalls(int direction, int balltype)
+    private void RemoveUnits(int direction, int balltype)
     {
         if (playUnit != null && playUnit.UnitType() == balltype)
         {
             if(NeighborTile(direction) != null)
             {
-                NeighborTile(direction).GetComponent<TileUnit>().RemoveBalls(direction, balltype);
+                NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, balltype);
             }
             Destroy(playUnit.gameObject);
+            ClearTile();
         }
     }
 
-    private int CountBallsInLine(int direction)
+    private int CountUnitsInLine(int direction)
     {
-        int count = CountBalls(direction, playUnit.UnitType());
+        int count = CountUnits(direction, playUnit.UnitType());
 
         direction = OposideDirection(direction);
-        count += CountBalls(direction, playUnit.UnitType());
+        count += CountUnits(direction, playUnit.UnitType());
         return count;
     }
 
-    private int CountBalls(int direction, int balltype)
+    private int CountUnits(int direction, int balltype)
     {
         if(playUnit != null && playUnit.UnitType() == balltype)
         {
             GameObject n_Tile = NeighborTile(direction);
             if (n_Tile != null)
             {
-                return n_Tile.GetComponent<TileUnit>().CountBalls(direction, balltype) + 1;
+                return n_Tile.GetComponent<TileUnit>().CountUnits(direction, balltype) + 1;
             }
             return 1;
         }
