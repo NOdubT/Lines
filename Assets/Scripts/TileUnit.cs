@@ -64,19 +64,23 @@ public class TileUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
-            ClearTile();
+            ClearTile(null);
         }
     }
 
-    private void ClearTile()
+    private void ClearTile(GameObject unitToDestroy)
     {
         gameObject.tag = tileTagEmpty;
+        if(unitToDestroy != null)
+        {
+            Destroy(unitToDestroy);
+        }
         playUnit = null;
     }
 
     IEnumerator CheckTag()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         if (gameObject.CompareTag(tileTagFull))
         {
             gameManager.SpawnPlayUnits(transform.position);
@@ -117,7 +121,7 @@ public class TileUnit : MonoBehaviour
 
         if (totalCount > 0)
         {
-            Destroy(playUnit.gameObject);
+            ClearTile(playUnit.gameObject);
             gameManager.AddScore(CountScore(totalCount));
         }
     }
@@ -133,13 +137,13 @@ public class TileUnit : MonoBehaviour
 
     private void RemoveUnitsInLine(int direction)
     {
-        if (NeighborTile(direction) != null) // remove with out this
+        if (NeighborTile(direction) != null)
         {
             NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, playUnit.UnitType());
         }
 
         direction = OposideDirection(direction);
-        if (NeighborTile(direction) != null) // remove with out this
+        if (NeighborTile(direction) != null)
         {
             NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, playUnit.UnitType());
         }
@@ -153,8 +157,7 @@ public class TileUnit : MonoBehaviour
             {
                 NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, balltype);
             }
-            Destroy(playUnit.gameObject);
-            ClearTile();
+            ClearTile(playUnit.gameObject);
         }
     }
 
