@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI playerScoreText;
     private PlayerSettings playerSettings;
 
-    private GameObject[] _tileList;
     private List<GameObject> nextSpawnUnitsList;
 
     public PlayUnit activePlayUnit { set; get; }
@@ -20,7 +18,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _tileList = GameObject.FindGameObjectsWithTag(TileUnit.tileUnitTag);
         playerSettings = GameObject.Find(PlayerSettings.player).GetComponent<PlayerSettings>();
 
         InitNextSpawnUnits();
@@ -39,19 +36,18 @@ public class GameManager : MonoBehaviour
         playerScoreText.text = $"Score: {playerSettings.playerScore}";
     }
 
-    public void InitNextSpawnUnits()
+    private void InitNextSpawnUnits()
     {
         nextSpawnUnitsList = new List<GameObject>();
-        List<GameObject> c_tileList = _tileList.ToList<GameObject>();
         foreach (GameObject tile in nextPlayUnitTiles)
         {
             GameObject go = Instantiate(playUnits[Random.Range(0, playUnits.Count)],
                 tile.transform.position, gameObject.transform.rotation);
-            TileUnit tileUnit = RandomEmptyTile(c_tileList);
+            TileUnit tileUnit = RandomEmptyTile();
             if (tileUnit != null)
             {
                 go.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position = tileUnit.transform.position;
-                c_tileList.Remove(tileUnit.gameObject);
+                tileUnit.gameObject.tag = TileUnit.tileTagUnitPreview;
             }
             nextSpawnUnitsList.Add(go);
         }
@@ -65,25 +61,20 @@ public class GameManager : MonoBehaviour
             Vector3 posSpawn = playUnit.playUnitPreview.transform.position;
             if (posSpawn == notInPoint)
             {
-                posSpawn = RandomEmptyTile(_tileList.ToList<GameObject>()).transform.position;
+                posSpawn = RandomEmptyTile().transform.position;
             }
             playUnit.MovePlayUnit(posSpawn);
         }
         InitNextSpawnUnits();
     }
 
-    private TileUnit RandomEmptyTile(List<GameObject> tileList)
+    private TileUnit RandomEmptyTile()
     {
-        if (tileList.Count > 0)
+        GameObject[] tileList = GameObject.FindGameObjectsWithTag(TileUnit.tileTagEmpty);
+        if (tileList.Length > 0)
         {
-            int index = Random.Range(0, tileList.Count);
-            TileUnit tileUnit = tileList[index].GetComponent<TileUnit>();
-            if (tileUnit.playUnit != null)
-            {
-                tileList.RemoveAt(index);
-                return RandomEmptyTile(tileList);
-            }
-            return tileUnit;
+            int index = Random.Range(0, tileList.Length);
+            return tileList[index].GetComponent<TileUnit>();
         }
         return null;
     }

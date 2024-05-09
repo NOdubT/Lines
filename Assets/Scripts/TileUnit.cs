@@ -28,7 +28,9 @@ public class TileUnit : MonoBehaviour
 
     private int ballsInLine = 5;
 
-    public static string tileUnitTag = "Tile";
+    public static string tileTagEmpty = "TileEmpty";
+    public static string tileTagUnitPreview = "TileUnitPreview";
+    public static string tileTagFull = "TileFull";
 
     public PlayUnit playUnit { get; set; }
     public int pathWeight { get; set; }
@@ -53,6 +55,7 @@ public class TileUnit : MonoBehaviour
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
             playUnit = other.GetComponent<PlayUnit>();
+            gameObject.tag = tileTagFull;
         }
     }
 
@@ -60,6 +63,7 @@ public class TileUnit : MonoBehaviour
     {
         if (other.CompareTag(PlayUnit.playUnitTag))
         {
+            gameObject.tag = tileTagEmpty;
             playUnit = null;
         }
     }
