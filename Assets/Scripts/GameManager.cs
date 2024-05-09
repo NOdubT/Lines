@@ -42,14 +42,16 @@ public class GameManager : MonoBehaviour
     public void InitNextSpawnUnits()
     {
         nextSpawnUnitsList = new List<GameObject>();
+        List<GameObject> c_tileList = _tileList.ToList<GameObject>();
         foreach (GameObject tile in nextPlayUnitTiles)
         {
             GameObject go = Instantiate(playUnits[Random.Range(0, playUnits.Count)],
                 tile.transform.position, gameObject.transform.rotation);
-            TileUnit tileUnit = RandomEmptyTile(_tileList.ToList<GameObject>());
+            TileUnit tileUnit = RandomEmptyTile(c_tileList);
             if (tileUnit != null)
             {
                 go.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position = tileUnit.transform.position;
+                c_tileList.Remove(tileUnit.gameObject);
             }
             nextSpawnUnitsList.Add(go);
         }

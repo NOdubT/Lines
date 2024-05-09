@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayUnit : MonoBehaviour
@@ -21,8 +22,8 @@ public class PlayUnit : MonoBehaviour
     public virtual void MovePlayUnit(Vector3 toPoint)
     {
         gameObject.GetComponent<Animator>().enabled = false;
-        gameManager.activePlayUnit = null;
         gameObject.transform.position = toPoint;
+        gameManager.activePlayUnit = null;
     }
 
     private void OnMouseDown()

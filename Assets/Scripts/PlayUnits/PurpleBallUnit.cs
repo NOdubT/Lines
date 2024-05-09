@@ -6,9 +6,8 @@ public class PurpleBallUnit : PlayUnit
 
     public override void MovePlayUnit(Vector3 toPoint)
     {
-        gameObject.GetComponent<Animator>().enabled = false;
-        gameManager.activePlayUnit = null;
         parent.transform.position = toPoint;
+        base.MovePlayUnit(toPoint);
     }
 
     public override int UnitType()

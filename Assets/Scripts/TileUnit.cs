@@ -66,7 +66,7 @@ public class TileUnit : MonoBehaviour
 
     IEnumerator CheckBalls()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         int countLB = CountBallsInLine(LEFT_BOTTOM);
         int countB = CountBallsInLine(BOTTOM);
         int countRB = CountBallsInLine(RIGHT_BOTTOM);
