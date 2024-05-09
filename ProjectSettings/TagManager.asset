@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Tile
   - PlayUnit
   - TileNextUnit
+  - TileEmpty
+  - TileUnitPreview
+  - TileFull
   layers:
   - Default
   - TransparentFX
