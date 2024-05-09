@@ -46,7 +46,7 @@ public class TileUnit : MonoBehaviour
         if (gameManager.activePlayUnit != null)
         {
             gameManager.activePlayUnit.MovePlayUnit(transform.position);
-            StartCoroutine(CheckBalls());
+            StartCoroutine(CheckTag());
         }
     }
 
@@ -56,6 +56,7 @@ public class TileUnit : MonoBehaviour
         {
             playUnit = other.GetComponent<PlayUnit>();
             gameObject.tag = tileTagFull;
+            CheckBalls();
         }
     }
 
@@ -68,9 +69,17 @@ public class TileUnit : MonoBehaviour
         }
     }
 
-    IEnumerator CheckBalls()
+    IEnumerator CheckTag()
     {
         yield return new WaitForSeconds(0.1f);
+        if (gameObject.CompareTag(tileTagFull))
+        {
+            gameManager.SpawnPlayUnits(transform.position);
+        }
+    }
+
+    private void CheckBalls()
+    {
         int countLB = CountBallsInLine(LEFT_BOTTOM);
         int countB = CountBallsInLine(BOTTOM);
         int countRB = CountBallsInLine(RIGHT_BOTTOM);
@@ -105,9 +114,6 @@ public class TileUnit : MonoBehaviour
         {
             Destroy(playUnit.gameObject);
             gameManager.AddScore(CountScore(totalCount));
-        } else
-        {
-            gameManager.SpawnPlayUnits(transform.position);
         }
     }
 
