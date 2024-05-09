@@ -6,6 +6,8 @@ public class PlayUnit : MonoBehaviour
     public const int RED = 1;
     public const int YELLOW = 2;
     public const int PURPLE = 3;
+    public const int GREEN = 4;
+    public const int BLUE = 5;
 
     public GameObject playUnitPreview;
 

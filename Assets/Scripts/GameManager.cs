@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
                 } else
                 {
                     gameOver = true;
+                    GameOver();
                     return;
                 }
                 
@@ -86,5 +87,11 @@ public class GameManager : MonoBehaviour
             return tileList[index].GetComponent<TileUnit>();
         }
         return null;
+    }
+
+    private void GameOver()
+    {
+        GameObject.Find("BestPlayerContainer").SetActive(true);
+        GameObject.Find("PanelTop").SetActive(false);     
     }
 }
