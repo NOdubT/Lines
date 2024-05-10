@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileUnit : MonoBehaviour
@@ -32,18 +35,24 @@ public class TileUnit : MonoBehaviour
     public static string tileTagUnitPreview = "TileUnitPreview";
     public static string tileTagFull = "TileFull";
 
+    [SerializeField] List<GameObject> canMoveTo;
+
     public PlayUnit playUnit { get; set; }
-    public int pathWeight { get; set; }
+    public bool inPath { get; set; }
 
     private void Start()
     {
-        pathWeight = 0;
+        inPath = false;
+        if (TopTile != null) canMoveTo.Add(TopTile);
+        if (RightTile != null) canMoveTo.Add(RightTile);
+        if (LeftTile != null) canMoveTo.Add(LeftTile);
+        if (BottomTile != null) canMoveTo.Add(BottomTile);
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
     }
 
     private void OnMouseDown()
     {
-        if (gameManager.activePlayUnit != null)
+        if (gameManager.activePlayUnit != null && CanMove(gameManager.activePlayUnit.transform.position))
         {
             gameManager.activePlayUnit.MovePlayUnit(transform.position);
             StartCoroutine(CheckTag());
@@ -71,7 +80,7 @@ public class TileUnit : MonoBehaviour
     private void ClearTile(GameObject unitToDestroy)
     {
         gameObject.tag = tileTagEmpty;
-        if(unitToDestroy != null)
+        if (unitToDestroy != null)
         {
             Destroy(unitToDestroy);
         }
@@ -95,7 +104,7 @@ public class TileUnit : MonoBehaviour
         int countR = CountUnitsInLine(RIGHT);
 
         int totalCount = 0;
-        if(countLB > ballsInLine)
+        if (countLB > ballsInLine)
         {
             totalCount += countLB - 1;
             RemoveUnitsInLine(LEFT_BOTTOM);
@@ -128,7 +137,7 @@ public class TileUnit : MonoBehaviour
 
     private int CountScore(int totalCount)
     {
-        if(totalCount > 5)
+        if (totalCount > 5)
         {
             totalCount = 5 + (totalCount - 5) * 2;
         }
@@ -153,7 +162,7 @@ public class TileUnit : MonoBehaviour
     {
         if (playUnit != null && playUnit.UnitType() == balltype)
         {
-            if(NeighborTile(direction) != null)
+            if (NeighborTile(direction) != null)
             {
                 NeighborTile(direction).GetComponent<TileUnit>().RemoveUnits(direction, balltype);
             }
@@ -172,7 +181,7 @@ public class TileUnit : MonoBehaviour
 
     private int CountUnits(int direction, int balltype)
     {
-        if(playUnit != null && playUnit.UnitType() == balltype)
+        if (playUnit != null && playUnit.UnitType() == balltype)
         {
             GameObject n_Tile = NeighborTile(direction);
             if (n_Tile != null)
@@ -182,6 +191,91 @@ public class TileUnit : MonoBehaviour
             return 1;
         }
         return 0;
+    }
+
+    private bool CanMove(Vector3 toPoint)
+    {
+        toPoint += Vector3.down * toPoint.y;
+        List<TileUnit> tilesInPath = new List<TileUnit>();
+        tilesInPath.Add(this);
+        tilesInPath = AddPathCircle(tilesInPath, toPoint);
+
+        foreach (TileUnit tile in tilesInPath)
+        {
+            tile.inPath = false;
+        }
+
+        return tilesInPath.Last().transform.position == toPoint;
+    }
+
+    private List<TileUnit> AddPathCircle(List<TileUnit> tilesInCircle, Vector3 toPoint)
+    {
+        if (tilesInCircle.Last().transform.position == toPoint)
+        {
+            return tilesInCircle;
+        }
+
+        List<TileUnit> tilesInNextCircle = new List<TileUnit>();
+        foreach (TileUnit tile in tilesInCircle)
+        {
+            tilesInNextCircle.AddRange(tile.BuildPath(toPoint));
+            if (tilesInNextCircle.Count > 0 && tilesInNextCircle.Last().transform.position == toPoint)
+            {
+                tilesInCircle.AddRange(tilesInNextCircle);
+                return tilesInCircle;
+            }
+        }
+
+        if (tilesInNextCircle.Count > 0)
+        {
+            tilesInCircle.AddRange(AddPathCircle(tilesInNextCircle, toPoint));
+        }
+
+        return tilesInCircle;
+    }
+
+    private List<TileUnit> BuildPath(Vector3 toPoint)
+    {
+        List<TileUnit> tilesInPath = new List<TileUnit>();
+
+        foreach (GameObject go in canMoveTo)
+        {
+            if (AddTileToPath(go, toPoint))
+            {
+                tilesInPath.Add(go.GetComponent<TileUnit>());
+                if (go.transform.position == toPoint)
+                {
+                    break;
+                }
+            }
+        }
+
+        return tilesInPath;
+    }
+
+    private bool AddTileToPath(GameObject tileUnit, Vector3 toPoint)
+    {
+        if (tileUnit != null)
+        {
+            if (!tileUnit.CompareTag(tileTagFull))
+            {
+                if (!tileUnit.GetComponent<TileUnit>().inPath)
+                {
+                    tileUnit.GetComponent<TileUnit>().inPath = true;
+                    return true;
+                }
+            }
+            else
+            {
+                if (tileUnit.transform.position == toPoint)
+                {
+                    tileUnit.GetComponent<TileUnit>().inPath = true;
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
     private int OposideDirection(int direction)
