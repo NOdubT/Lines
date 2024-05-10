@@ -29,7 +29,7 @@ public class PlayUnit : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!playUnitPreview.activeSelf)
+        if (!playUnitPreview.activeSelf && !gameManager.gameOver)
         {
             if(gameManager.activePlayUnit != null)
             {

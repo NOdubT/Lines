@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     {
         playerSettings = GameObject.Find(PlayerSettings.player).GetComponent<PlayerSettings>();
 
+        nextSpawnUnitsList = new List<GameObject>();
+
         InitNextSpawnUnits();
         StartCoroutine(Spawn());
     }
@@ -38,7 +40,6 @@ public class GameManager : MonoBehaviour
 
     private void InitNextSpawnUnits()
     {
-        nextSpawnUnitsList = new List<GameObject>();
         foreach (GameObject tile in nextPlayUnitTiles)
         {
             GameObject go = Instantiate(playUnits[Random.Range(0, playUnits.Count)],
@@ -49,33 +50,62 @@ public class GameManager : MonoBehaviour
                 go.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position = tileUnit.transform.position;
                 tileUnit.gameObject.tag = TileUnit.tileTagUnitPreview;
             }
+            else
+            {
+                go.GetComponentInChildren<PlayUnit>().playUnitPreview.transform.position = Vector3.down;
+            }
             nextSpawnUnitsList.Add(go);
         }
     }
 
     public void SpawnPlayUnits(Vector3 notInPoint)
     {
-        foreach(GameObject go in nextSpawnUnitsList)
+        List<GameObject> goNotAdded = nextSpawnUnitsList.GetRange(0, nextSpawnUnitsList.Count);
+        foreach (GameObject go in nextSpawnUnitsList)
         {
-            PlayUnit playUnit = go.GetComponentInChildren<PlayUnit>();
-            Vector3 posSpawn = playUnit.playUnitPreview.transform.position;
-            if (posSpawn == notInPoint)
+            if (SpawnNextUnit(go, notInPoint))
             {
-                TileUnit randomPos = RandomEmptyTile();
-                if(randomPos != null)
-                {
-                    posSpawn = randomPos.transform.position;
-                } else
-                {
-                    gameOver = true;
-                    GameOver();
-                    return;
-                }
-                
+                goNotAdded.Remove(go);
             }
-            playUnit.MovePlayUnit(posSpawn);
         }
+        
+        if (goNotAdded.Count > 0)
+        {
+            foreach (GameObject go in goNotAdded)
+            {
+                SpawnNextUnit(go, notInPoint);
+            }
+        }
+
+        if (RandomEmptyTile() == null)
+        {
+            gameOver = true;
+            return;
+        }
+
+        nextSpawnUnitsList.Clear();
         InitNextSpawnUnits();
+    }
+
+    private bool SpawnNextUnit(GameObject go, Vector3 notInPoint)
+    {
+        PlayUnit playUnit = go.GetComponentInChildren<PlayUnit>();
+        Vector3 posSpawn = playUnit.playUnitPreview.transform.position;
+        if (posSpawn == notInPoint)
+        {
+            TileUnit randomPos = RandomEmptyTile();
+            if (randomPos != null)
+            {
+                randomPos.tag = TileUnit.tileTagUnitPreview;
+                posSpawn = randomPos.transform.position;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        playUnit.MovePlayUnit(posSpawn);
+        return true;
     }
 
     private TileUnit RandomEmptyTile()
@@ -87,11 +117,5 @@ public class GameManager : MonoBehaviour
             return tileList[index].GetComponent<TileUnit>();
         }
         return null;
-    }
-
-    private void GameOver()
-    {
-        GameObject.Find("BestPlayerContainer").SetActive(true);
-        GameObject.Find("PanelTop").SetActive(false);     
     }
 }
