@@ -1,15 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class PlayerSettings : MonoBehaviour
 {
-    public string playerName { get; set; }
-    public int playerScore { get; set; }
+    public Player player;
 
-    public static string player = "Player";
+    private int maxPlayersNumber = 10;
 
-    public static PlayerSettings instance {  get; private set; }
+    public static PlayerSettings instance { get; private set; }
+
+    public List<Player> bestScore { get; private set; }
+
+    [Serializable]
+    public struct Player
+    {
+        public string Name;
+        public int Score;
+    }
 
     private void Awake()
     {
@@ -18,35 +27,59 @@ public class PlayerSettings : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        else
+        {
+            player.Name = "";
+            player.Score = 0;
+            LoadScore();
+        }
 
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SetPlayerName(string name)
+    {
+        player.Name = name;
+    }
+
+    public void CheckScore()
+    {
+        bestScore.Add(player);
+        bestScore.Sort((a, b) => b.Score.CompareTo(a.Score));
+        if (bestScore.Count > maxPlayersNumber)
+        {
+            bestScore.RemoveAt(bestScore.Count);
+        }
+        SaveScore();
+    }
+
     [Serializable]
     class SaveData
     {
-        public string name;
-        public int score;
+        public List<Player> data;
     }
 
-    public void SaveScore()
+    private void SaveScore()
     {
         SaveData sd = new SaveData();
-        sd.name = playerName;
-        sd.score = playerScore;
+        sd.data = bestScore;
 
         string json = JsonUtility.ToJson(sd);
         File.WriteAllText(Application.persistentDataPath + "/bestscore.json", json);
     }
 
-    public void LoadScore()
+    private void LoadScore()
     {
         string path = Application.persistentDataPath + "/bestscore.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            bestScore = JsonUtility.FromJson<SaveData>(json).data;
+        }
+        if (bestScore == null)
+        {
+            bestScore = new List<Player>();
         }
     }
 }

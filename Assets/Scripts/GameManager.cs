@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        playerSettings = GameObject.Find(PlayerSettings.player).GetComponent<PlayerSettings>();
+        playerSettings = GameObject.Find("Player").GetComponent<PlayerSettings>();
 
         nextSpawnUnitsList = new List<GameObject>();
 
@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        playerSettings.playerScore += scoreToAdd;
-        playerScoreText.text = $"Score: {playerSettings.playerScore}";
+        playerSettings.player.Score += scoreToAdd;
+        playerScoreText.text = $"Score: {playerSettings.player.Score}";
     }
 
     private void InitNextSpawnUnits()
