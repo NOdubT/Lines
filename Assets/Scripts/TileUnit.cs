@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileUnit : MonoBehaviour
@@ -196,9 +195,7 @@ public class TileUnit : MonoBehaviour
     private bool CanMove(Vector3 toPoint)
     {
         toPoint += Vector3.down * toPoint.y;
-        List<TileUnit> tilesInPath = new List<TileUnit>();
-        tilesInPath.Add(this);
-        tilesInPath = AddPathCircle(tilesInPath, toPoint);
+        List<TileUnit> tilesInPath = AddPathCircle(BuildPathCircle(toPoint), toPoint);
 
         foreach (TileUnit tile in tilesInPath)
         {
@@ -218,7 +215,7 @@ public class TileUnit : MonoBehaviour
         List<TileUnit> tilesInNextCircle = new List<TileUnit>();
         foreach (TileUnit tile in tilesInCircle)
         {
-            tilesInNextCircle.AddRange(tile.BuildPath(toPoint));
+            tilesInNextCircle.AddRange(tile.BuildPathCircle(toPoint));
             if (tilesInNextCircle.Count > 0 && tilesInNextCircle.Last().transform.position == toPoint)
             {
                 tilesInCircle.AddRange(tilesInNextCircle);
@@ -234,7 +231,7 @@ public class TileUnit : MonoBehaviour
         return tilesInCircle;
     }
 
-    private List<TileUnit> BuildPath(Vector3 toPoint)
+    private List<TileUnit> BuildPathCircle(Vector3 toPoint)
     {
         List<TileUnit> tilesInPath = new List<TileUnit>();
 
