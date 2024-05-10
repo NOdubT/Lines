@@ -49,7 +49,7 @@ public class PlayerSettings : MonoBehaviour
         bestScore.Sort((a, b) => b.Score.CompareTo(a.Score));
         if (bestScore.Count > maxPlayersNumber)
         {
-            bestScore.RemoveAt(bestScore.Count);
+            bestScore.RemoveAt(bestScore.Count - 1);
         }
         SaveScore();
     }

@@ -17,6 +17,7 @@ public class MenuManeger : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
+        SetBestPlayer();
     }
 
     private void Update()
@@ -29,13 +30,25 @@ public class MenuManeger : MonoBehaviour
 
     public void GameOver()
     {
+        gameManager.gameOver = true;
         PlayerSettings.instance.CheckScore();
-        for(int i = 0; i < PlayerSettings.instance.bestScore.Count; i++)
-        {
-            BestPlayersText[i].text = $"{PlayerSettings.instance.bestScore[i].Name}: {PlayerSettings.instance.bestScore[i].Score}";
-        }
+        SetBestPlayer();
         TopContainer.SetActive(false);
         BestPlayersContainer.SetActive(true);
+    }
+
+    private void SetBestPlayer()
+    {
+        for (int i = 0; i < PlayerSettings.instance.bestScore.Count; i++)
+        {
+            string text = PlayerSettings.instance.bestScore[i].Name + ": " + PlayerSettings.instance.bestScore[i].Score;
+            BestPlayersText[i].text = text;
+        }
+    }
+
+    public void BestScore()
+    {
+        BestPlayersContainer.SetActive(!BestPlayersContainer.activeSelf);
     }
 
     public void NewGame()
