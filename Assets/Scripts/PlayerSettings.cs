@@ -29,8 +29,6 @@ public class PlayerSettings : MonoBehaviour
         }
         else
         {
-            player.Name = "";
-            player.Score = 0;
             LoadScore();
         }
 

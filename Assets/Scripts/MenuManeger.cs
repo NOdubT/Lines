@@ -20,14 +20,6 @@ public class MenuManeger : MonoBehaviour
         SetBestPlayer();
     }
 
-    private void Update()
-    {
-        if (gameManager.gameOver)
-        {
-            GameOver();
-        }
-    }
-
     public void GameOver()
     {
         gameManager.gameOver = true;

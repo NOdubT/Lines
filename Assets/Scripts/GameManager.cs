@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> playUnits;
     public List<GameObject> nextPlayUnitTiles;
 
-    public TextMeshProUGUI playerScoreText;
+    public TextMeshProUGUI PlayerScoreText;
+    public MenuManeger MenuManager;
     private PlayerSettings playerSettings;
 
     private List<GameObject> nextSpawnUnitsList;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     public void AddScore(int scoreToAdd)
     {
         playerSettings.player.Score += scoreToAdd;
-        playerScoreText.text = $"Score: {playerSettings.player.Score}";
+        PlayerScoreText.text = $"Score: {playerSettings.player.Score}";
     }
 
     private void InitNextSpawnUnits()
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         if (RandomEmptyTile() == null)
         {
-            gameOver = true;
+            MenuManager.GameOver();
             return;
         }
 

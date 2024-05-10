@@ -2987,7 +2987,8 @@ MonoBehaviour:
   - {fileID: 1554353405}
   - {fileID: 570815016}
   - {fileID: 466325671}
-  playerScoreText: {fileID: 303859079}
+  PlayerScoreText: {fileID: 0}
+  MenuManager: {fileID: 1792738845}
 --- !u!1 &367541252 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3630363562772508547, guid: 8abf61f0c68357e498ae08103ee63586,
