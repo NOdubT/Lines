@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuManeger : MonoBehaviour
 {
-    public GameObject TopContainer;
-    public GameObject RightContainer;
     public GameObject BestPlayersContainer;
 
     public TMP_InputField NameInput;
@@ -27,7 +25,6 @@ public class MenuManeger : MonoBehaviour
         gameManager.gameOver = true;
         PlayerSettings.instance.CheckScore();
         SetBestPlayer();
-        TopContainer.SetActive(false);
         BestPlayersContainer.SetActive(true);
     }
 
