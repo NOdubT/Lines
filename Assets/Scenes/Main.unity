@@ -2987,7 +2987,7 @@ MonoBehaviour:
   - {fileID: 1554353405}
   - {fileID: 570815016}
   - {fileID: 466325671}
-  PlayerScoreText: {fileID: 0}
+  PlayerScoreText: {fileID: 303859079}
   MenuManager: {fileID: 1792738845}
 --- !u!1 &367541252 stripped
 GameObject:
@@ -13141,6 +13141,7 @@ MonoBehaviour:
   TopContainer: {fileID: 641112663}
   RightContainer: {fileID: 1663899769}
   BestPlayersContainer: {fileID: 607801775}
+  NameInput: {fileID: 1197202488}
   BestPlayersText:
   - {fileID: 963565896}
   - {fileID: 355936935}

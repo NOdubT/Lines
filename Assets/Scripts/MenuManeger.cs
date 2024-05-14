@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,6 +9,8 @@ public class MenuManeger : MonoBehaviour
     public GameObject RightContainer;
     public GameObject BestPlayersContainer;
 
+    public TMP_InputField NameInput;
+
     public List<TextMeshProUGUI> BestPlayersText;
 
     private GameManager gameManager;
@@ -17,6 +18,7 @@ public class MenuManeger : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("GameField").GetComponent<GameManager>();
+        NameInput.text = PlayerSettings.instance.player.Name;
         SetBestPlayer();
     }
 
